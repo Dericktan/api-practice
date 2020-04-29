@@ -18,4 +18,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('blogs', 'BlogController');
+Route::group(['middleware' => ['auth:api']], function () {
+    Route::resource('blogs', 'BlogController');
+    Route::post('comments', 'CommentsController@store');
+    Route::put('comments/{id}', 'CommentsController@update');
+    Route::delete('comments/{id}', 'CommentsController@delete');
+});
+
+Route::post('register', 'AuthController@register');
+Route::post('login', 'AuthController@login');

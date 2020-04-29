@@ -40,8 +40,9 @@ class BlogController extends Controller
      * @param  \App\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function show(Blog $blog)
+    public function show($id)
     {
+        $blog = Blog::with('comments')->where('id', $id)->first();
         return response()->json($blog);
     }
 
